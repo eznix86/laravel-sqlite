@@ -1,0 +1,64 @@
+{
+    "name": "eznix86/laravel-sqlite",
+    "description": "Optimize SQLite for Laravel",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^8.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Eznix86\\LaravelSQLite\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Eznix86\\LaravelSQLite\\AppServiceProvider"
+            ]
+        }
+    },
+    "authors": [
+        {
+            "name": "Bruno Bernard",
+            "email": "contact.brunobernard@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "orchestra/testbench": "^10.9",
+        "pestphp/pest": "^4.0",
+        "pestphp/pest-plugin-laravel": "^4.0",
+        "laravel/pint": "^1.27",
+        "phpstan/phpstan": "^2.1",
+        "larastan/larastan": "^3.9",
+        "rector/rector": "^2.3",
+        "mrpunyapal/rector-pest": "^0.1.9",
+        "driftingly/rector-laravel": "^2.1"
+    },
+    "scripts": {
+        "test": "vendor/bin/pest",
+        "lint": [
+            "vendor/bin/rector process --dry-run",
+            "vendor/bin/phpstan analyse --memory-limit=1G",
+            "vendor/bin/pint --test"
+        ],
+        "lint:fix": [
+            "vendor/bin/rector process",
+            "vendor/bin/phpstan analyse --memory-limit=1G",
+            "vendor/bin/pint"
+        ]
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        }
+    }
+}
