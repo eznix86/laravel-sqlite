@@ -1,5 +1,7 @@
 # Laravel SQLite
 
+![Optimize SQLite Banner](./art/optimize-sqlite.png)
+
 Optimize SQLite for Laravel in production.
 
 This package exists to give SQLite-first Laravel apps explicit control over performance PRAGMAs, maintenance commands, and migration-time file behavior.
