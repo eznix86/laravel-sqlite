@@ -1,4 +1,4 @@
-# Laravel SQLite
+# Optimize SQLite For Laravel
 
 ![Optimize SQLite Banner](./art/optimize-sqlite.png)
 
