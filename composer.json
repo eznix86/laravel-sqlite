@@ -42,15 +42,16 @@
     },
     "scripts": {
         "test": "vendor/bin/pest",
+        "test:types": "vendor/bin/phpstan analyse --memory-limit=1G",
+        "refactor": "vendor/bin/rector process",
+        "test:refactor": "vendor/bin/rector process --dry-run",
         "lint": [
-            "vendor/bin/rector process --dry-run",
-            "vendor/bin/phpstan analyse --memory-limit=1G",
-            "vendor/bin/pint --test"
+            "@test:refactor",
+            "vendor/bin/pint --test --parallel"
         ],
         "lint:fix": [
-            "vendor/bin/rector process",
-            "vendor/bin/phpstan analyse --memory-limit=1G",
-            "vendor/bin/pint"
+            "@refactor",
+            "vendor/bin/pint --parallel"
         ]
     },
     "minimum-stability": "dev",

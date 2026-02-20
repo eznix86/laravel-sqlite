@@ -103,10 +103,16 @@ Use [`eznix86/laravel-litestream`](https://github.com/eznix86/laravel-litestream
 ## Development
 
 ```bash
-composer test
+composer test:types
+composer refactor
 composer lint
 composer lint:fix
+composer test
 ```
+
+Notes:
+
+- This package currently uses feature-style tests; there is no dedicated `test:unit` script.
 
 ## License
 

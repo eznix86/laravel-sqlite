@@ -23,13 +23,10 @@ jobs:
         coverage: none
 
     - name: Install Dependencies
-      run: composer update --prefer-stable --no-interaction --no-progress --ansi
+      run: composer update --${{ matrix.dependency-version }} --no-interaction --no-progress --ansi
 
-    - name: PHPStan
-      run: ./vendor/bin/phpstan analyse --memory-limit=1G
+    - name: Lint
+      run: composer lint
 
-    - name: Rector
-      run: ./vendor/bin/rector process --dry-run
-
-    - name: Pint
-      run: ./vendor/bin/pint --test
+    - name: Types
+      run: composer test:types
