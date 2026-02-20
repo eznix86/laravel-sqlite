@@ -68,6 +68,12 @@ class AppServiceProvider extends ServiceProvider
 
     public static function sqlitePragmasCachePath(): string
     {
+        $configuredPath = config('sqlite.pragmas.cache_path');
+
+        if (is_string($configuredPath) && $configuredPath !== '') {
+            return $configuredPath;
+        }
+
         return app()->bootstrapPath('cache/sqlite-pragmas.php');
     }
 

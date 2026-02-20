@@ -36,6 +36,14 @@ return [
     'pragmas' => [
 
         /*
+        | cache_path
+        |
+        | Optional absolute path for the generated PRAGMA SQL cache file.
+        | Leave null to use bootstrap/cache/sqlite-pragmas.php.
+        */
+        'cache_path' => env('SQLITE_PRAGMAS_CACHE_PATH'),
+
+        /*
         | incremental_vacuum
         |
         | Utility:

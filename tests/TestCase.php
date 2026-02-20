@@ -17,8 +17,15 @@ abstract class TestCase extends Orchestra
     protected function defineEnvironment($app): void
     {
         $config = $app->make('config');
-        $databaseOne = sys_get_temp_dir().'/laravel-sqlite-tests-one.sqlite';
-        $databaseTwo = sys_get_temp_dir().'/laravel-sqlite-tests-two.sqlite';
+        $basePath = $this->testsTempBasePath();
+
+        if (! is_dir($basePath)) {
+            mkdir($basePath, 0755, true);
+        }
+
+        $databaseOne = $basePath.'/laravel-sqlite-tests-one.sqlite';
+        $databaseTwo = $basePath.'/laravel-sqlite-tests-two.sqlite';
+        $cacheFile = $basePath.'/cache/sqlite-pragmas-'.bin2hex(random_bytes(8)).'.php';
 
         if (! file_exists($databaseOne)) {
             touch($databaseOne);
@@ -57,9 +64,17 @@ abstract class TestCase extends Orchestra
         $config->set('sqlite.enabled', true);
         $config->set('sqlite.litestream', false);
         $config->set('sqlite.pragmas.incremental_vacuum', true);
+        $config->set('sqlite.pragmas.cache_path', $cacheFile);
         $config->set('sqlite.pragmas.temp_store', 'MEMORY');
         $config->set('sqlite.pragmas.cache_size_mb', 64);
         $config->set('sqlite.pragmas.mmap_size_mb', 64);
         $config->set('sqlite.pragmas.wal_autocheckpoint', 1000);
+    }
+
+    private function testsTempBasePath(): string
+    {
+        $token = getenv('TEST_TOKEN');
+
+        return sys_get_temp_dir().'/laravel-sqlite-tests/'.($token !== false && $token !== '' ? $token : 'single');
     }
 }
