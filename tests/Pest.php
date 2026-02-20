@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 pest()->extend(TestCase::class)
-    ->in('Feature', 'Unit');
+    ->in('Feature');
 
 function pragmaValue(string $pragma): int
 {
