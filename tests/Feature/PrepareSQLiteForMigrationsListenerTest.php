@@ -19,7 +19,7 @@ it('touches missing sqlite files before migrate commands', function (): void {
     config()->set('database.connections.sqlite.database', $databasePath);
     DB::purge('sqlite');
 
-    new PrepareSQLiteForMigrations()->handle(commandStarting('migrate'));
+    (new PrepareSQLiteForMigrations())->handle(commandStarting('migrate'));
 
     expect(File::exists($databasePath))->toBeTrue();
 });
@@ -36,7 +36,7 @@ it('deletes sqlite files and sidecars for migrate fresh then recreates database 
     config()->set('database.connections.sqlite.database', $databasePath);
     DB::purge('sqlite');
 
-    new PrepareSQLiteForMigrations()->handle(commandStarting('migrate:fresh', 'sqlite'));
+    (new PrepareSQLiteForMigrations())->handle(commandStarting('migrate:fresh', 'sqlite'));
 
     expect(File::exists($databasePath))->toBeTrue()
         ->and(File::exists($databasePath.'-wal'))->toBeFalse()
@@ -61,7 +61,7 @@ it('respects database option during migrate fresh', function (): void {
     DB::purge('sqlite');
     DB::purge('sqlite_two');
 
-    new PrepareSQLiteForMigrations()->handle(commandStarting('migrate:fresh', 'sqlite_two'));
+    (new PrepareSQLiteForMigrations())->handle(commandStarting('migrate:fresh', 'sqlite_two'));
 
     expect(File::exists($databaseOne))->toBeTrue()
         ->and(File::exists($databaseOne.'-wal'))->toBeTrue()
@@ -75,7 +75,7 @@ it('skips file operations for memory sqlite connections', function (): void {
     config()->set('database.connections.sqlite.database', ':memory:');
     DB::purge('sqlite');
 
-    new PrepareSQLiteForMigrations()->handle(commandStarting('migrate:fresh', 'sqlite'));
+    (new PrepareSQLiteForMigrations())->handle(commandStarting('migrate:fresh', 'sqlite'));
 
     expect(File::exists(base_path(':memory:')))->toBeFalse();
 });
@@ -90,7 +90,7 @@ it('does not delete sidecars for db wipe', function (): void {
     config()->set('database.connections.sqlite.database', $databasePath);
     DB::purge('sqlite');
 
-    new PrepareSQLiteForMigrations()->handle(commandStarting('db:wipe', 'sqlite'));
+    (new PrepareSQLiteForMigrations())->handle(commandStarting('db:wipe', 'sqlite'));
 
     expect(File::exists($databasePath))->toBeTrue()
         ->and(File::exists($databasePath.'-wal'))->toBeTrue()
@@ -105,7 +105,7 @@ it('does not touch sqlite files for non mutating migration commands', function (
     config()->set('database.connections.sqlite.database', $databasePath);
     DB::purge('sqlite');
 
-    new PrepareSQLiteForMigrations()->handle(commandStarting('migrate:status'));
+    (new PrepareSQLiteForMigrations())->handle(commandStarting('migrate:status'));
 
     expect(File::exists($databasePath))->toBeFalse();
 });
@@ -114,7 +114,7 @@ it('blocks path traversal when sqlite path uses windows separators', function ()
     config()->set('database.connections.sqlite.database', '..\\listener\\blocked.sqlite');
     DB::purge('sqlite');
 
-    expect(fn () => new PrepareSQLiteForMigrations()->handle(commandStarting('migrate')))
+    expect(fn () => (new PrepareSQLiteForMigrations())->handle(commandStarting('migrate')))
         ->toThrow(InvalidArgumentException::class, 'Path traversal is not allowed for SQLite database paths.');
 });
 
