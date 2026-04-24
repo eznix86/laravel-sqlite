@@ -16,7 +16,8 @@ This package exists to give SQLite-first Laravel apps explicit control over perf
 ## Requirements
 
 - PHP `^8.3`
-- Laravel `13.x` (package is built/tested against the Laravel 13 ecosystem)
+- Laravel `13.x` >= v2.0.0
+- Laravel `12.x` <= v2.0.0
 
 ## Installation
 
